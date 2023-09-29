@@ -19,6 +19,7 @@ def drawLine(image):
     #find contours of red regions
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
+    #get the center points for all the cones
     centers = []
     for i in contours:
         M = cv2.moments(i)
@@ -27,7 +28,7 @@ def drawLine(image):
             cY = M["m01"]/M["m00"]
             centers.append((cX, cY))
 
-    #linear regression on all the points to find line
+    #linear regression on all the points to find line of best fit
     mean_x = sum(x for x, y in centers)/len(centers)
     mean_y = sum(y for x, y in centers)/len(centers)
 
